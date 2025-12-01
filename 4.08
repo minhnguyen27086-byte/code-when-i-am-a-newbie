@@ -1,0 +1,54 @@
+//Số đảo ngược cũng là số nguyên tố
+#include<iostream>
+
+using namespace std;
+
+// Hàm kiểm tra số nguyên tố thuần logic
+// Thay vì dùng sqrt(n), ta dùng điều kiện i * i <= n
+bool isPrime(int n) {
+    if (n < 2) return false;
+    
+    // Duyệt i từ 2, điều kiện dừng là i bình phương lớn hơn n
+    // Sử dụng long long cho i*i để tránh tràn số nếu n quá lớn (gần giới hạn int)
+    for (long long i = 2; i * i <= n; ++i) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Hàm đảo ngược số (chỉ dùng phép chia và chia lấy dư)
+int reverseNum(int n) {
+    int reversed = 0;
+    while (n > 0) {
+        int digit = n % 10;
+        reversed = reversed * 10 + digit;
+        n /= 10;
+    }
+    return reversed;
+}
+
+int main() {
+    int a, b;
+    // Nhập a và b
+    if (cin >> a >> b) {
+        int count = 0;
+        
+        for (int x = a; x <= b; ++x) {
+            // Bước 1: Kiểm tra số đó có phải nguyên tố không
+            if (isPrime(x)) {
+                // Bước 2: Tạo số đảo ngược
+                int revX = reverseNum(x);
+                
+                // Bước 3: Kiểm tra số đảo ngược có phải nguyên tố không
+                if (isPrime(revX)) {
+                    count++;
+                }
+            }
+        }
+        
+        cout << count << endl;
+    }
+    return 0;
+}
