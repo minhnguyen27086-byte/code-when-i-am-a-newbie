@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    long long n, k, p;
+    int q;
+    if (!(cin >> n)) return 0;
+    if (!(cin >> k)) return 0;
+    if (!(cin >> p)) return 0;
+    if (!(cin >> q)) return 0;
+
+    long long sA = 2LL * (p - 1) + q;
+
+    auto calc_uv = [](long long s) -> pair<long long,int> {
+        long long u = (s + 1) / 2;      // floor
+        int v = (s % 2 == 1) ? 1 : 2;
+        return {u, v};
+    };
+
+    struct Cand { long long u; int v; long long d; long long s; };
+    vector<Cand> C;
+
+    // Candidate sA - k
+    if (sA - k >= 1) {
+        long long s = sA - k;
+        auto [u, v] = calc_uv(s);
+        long long d = llabs(u - p);
+        C.push_back({u, v, d, s});
+    }
+    // Candidate sA + k
+    if (sA + k <= n) {
+        long long s = sA + k;
+        auto [u, v] = calc_uv(s);
+        long long d = llabs(u - p);
+        C.push_back({u, v, d, s});
+    }
+
+    if (C.empty()) {
+        cout << -1 << '\n';
+        return 0;
+    }
+
+    // Choose by minimal distance; tie-breaker: smaller u (front)
+    sort(C.begin(), C.end(), [](const Cand& a, const Cand& b){
+        if (a.d != b.d) return a.d < b.d;
+        return a.u < b.u;
+    });
+
+    cout << C[0].u << ' ' << C[0].v << '\n';
+    return 0;
+}
