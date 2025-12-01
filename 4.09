@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+void input(int &n) {
+
+    cin >> n;
+}
+
+void sum(int n, int &s){
+    // Trường hợp cơ sở: Khi n chỉ còn 1 chữ số.
+    if (n < 10){
+        s += n;
+        return; 
+    }
+    
+    // Bước đệ quy:
+    // 1. Cộng chữ số cuối cùng vào tổng s.
+    s += n % 10;
+    
+    // 2. Gọi đệ quy cho phần số còn lại.
+    sum(n / 10, s);
+}
+
+int main() {
+    int n, s=0;
+    input(n);
+    sum(n, s);
+    cout << s;
+}
