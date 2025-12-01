@@ -1,0 +1,16 @@
+//tìm số lớn nhất trong dãy
+#include <iostream>
+using namespace std;
+
+int largest_input(){
+int n;
+    cin >> n;
+    if (n == 0) return 0; // điều kiện dừng
+
+    int temp = largest_input(); // gọi đệ quy cho phần còn lại
+    if (n > temp) return n;
+    else return temp;
+    }
+int main(){
+	cout << largest_input();
+}
